@@ -20,3 +20,16 @@
     (prompt-read "Title")
     (prompt-read "Artist")
     (parse-integer (prompt-read "Rating") :junk-allowed t)))
+
+;; (save-db "./cds.db")
+(defun save-db (filename)
+  (with-open-file (out filename
+                   :direction :output
+                   :if-exists :supersede)
+    (with-standard-io-syntax
+      (print *db* out))))
+
+(defun load-db (filename)
+  (with-open-file (in filename)
+    (with-standard-io-syntax
+      (setf *db* (read in)))))
